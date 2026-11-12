@@ -51,7 +51,7 @@
       flex-direction: column;
       height: 100%;
       z-index: 10;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 4px 0 32px rgba(15, 23, 42, 0.03);
       position: relative;
     }
@@ -95,57 +95,39 @@
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
     }
 
-    .controls-container::-webkit-scrollbar { width: 5px; }
+    .controls-container::-webkit-scrollbar { width: 6px; }
     .controls-container::-webkit-scrollbar-track { background: var(--bg-sidebar); }
     .controls-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
-    details.control-section {
+    /* Redesigned Open Static Card Layouts */
+    .control-section {
       background-color: var(--bg-card);
       border: 1px solid var(--border-light);
       border-radius: 14px;
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.01);
-      transition: box-shadow 0.2s;
     }
 
-    details.control-section[open] {
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-    }
-
-    summary.section-title {
+    .section-title {
       padding: 14px 16px;
       font-size: 0.85rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--text-main);
-      cursor: pointer;
-      list-style: none;
+      background-color: #ffffff;
+      user-select: none;
+      border-bottom: 1px solid #f1f5f9;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #ffffff;
-      user-select: none;
-    }
-
-    summary.section-title::after {
-      content: '＋';
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #ff0055;
-      transition: transform 0.2s;
-    }
-
-    details.control-section[open] summary.section-title::after {
-      content: '－';
     }
 
     .section-content {
       padding: 16px;
-      border-top: 1px solid #f1f5f9;
       background-color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -162,7 +144,7 @@
     }
 
     .tab-btn {
-      padding: 6px;
+      padding: 8px;
       font-size: 0.75rem;
       font-weight: 700;
       background: transparent;
@@ -186,6 +168,12 @@
       cursor: pointer;
       background-color: #f8fafc;
       position: relative;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .file-upload-zone:hover {
+      border-color: #ff0055;
+      background-color: #fff5f7;
     }
 
     .file-upload-zone input[type="file"] {
@@ -196,7 +184,7 @@
     .control-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .control-label {
@@ -245,6 +233,11 @@
       font-size: 0.85rem;
       font-weight: 500;
       outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .select-input:focus {
+      border-color: #ff0055;
     }
 
     .toggle-group {
@@ -266,8 +259,53 @@
     input:checked + .slider { background: var(--rainbow-grad-h); }
     input:checked + .slider:before { transform: translateX(20px); }
 
+    .color-pickers {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .color-picker-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f1f5f9;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      flex: 1;
+    }
+
+    .color-picker-wrapper input[type="color"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: none;
+      padding: 0;
+    }
+
+    .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+    }
+
+    .color-picker-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
     .preset-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { background-color: #f1f5f9; padding: 6px 12px; border-radius: 16px; font-size: 0.75rem; font-weight: 600; cursor: pointer; user-select: none; }
+    .chip { background-color: #f1f5f9; padding: 6px 12px; border-radius: 16px; font-size: 0.75rem; font-weight: 600; cursor: pointer; user-select: none; transition: all 0.2s; }
     .chip.active, .chip:hover { background: var(--rainbow-grad-h); color: white; }
 
     .config-io-box {
@@ -288,9 +326,9 @@
       border-color: #ff0055;
     }
 
-    .layers-list { max-height: 120px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
-    .layer-item { display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; border: 1px solid var(--border-light); }
-    .layer-meta-controls { display: flex; align-items: center; gap: 6px; }
+    .layers-list { max-height: 150px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 2px; }
+    .layer-item { display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; padding: 8px 12px; border-radius: 8px; font-size: 0.75rem; border: 1px solid var(--border-light); }
+    .layer-meta-controls { display: flex; align-items: center; gap: 8px; }
 
     .action-grid {
       display: grid;
@@ -372,14 +410,14 @@
     }
 
     .menu-toggle {
-      display: none; position: absolute; bottom: 16px; left: 16px; z-index: 20;
+      display: none; position: absolute; bottom: 16px; left: 16px; z-index: 30;
       background: var(--rainbow-grad-h); color: white; border: none; padding: 12px;
-      border-radius: 50%; cursor: pointer;
+      border-radius: 50%; cursor: pointer; box-shadow: 0 4px 14px rgba(255,0,85,0.2);
     }
 
     @media (max-width: 950px) {
       body { flex-direction: column; }
-      .sidebar { position: absolute; left: 0; top: 0; height: 100%; transform: translateX(-100%); }
+      .sidebar { position: absolute; left: 0; top: 0; height: 100%; transform: translateX(-100%); width: 320px; }
       .sidebar.open { transform: translateX(0); }
       .menu-toggle { display: block; }
     }
@@ -417,8 +455,8 @@
       <div class="controls-container">
         
         <!-- Panel 1: Advanced Acoustic Signal Processor Matrix -->
-        <details class="control-section" open>
-          <summary class="section-title">Sonic Audio Core</summary>
+        <div class="control-section">
+          <div class="section-title">Sonic Audio Core</div>
           <div class="section-content">
             <div class="source-tabs">
               <button class="tab-btn active" id="tabMp3" onclick="setAudioSourceMode('mp3')">MP3 Media Stream</button>
@@ -432,7 +470,7 @@
                 <div class="file-label-name" id="fileNameDisplay">Null trace</div>
                 <input type="file" id="audioFileInput" accept="audio/*">
               </div>
-              <div class="media-player-controls">
+              <div class="media-player-controls" style="margin-top: 10px;">
                 <button class="btn btn-secondary" id="trackPlayBtn" style="width: 100%; font-size: 0.75rem; padding: 8px;" disabled>Play Audio Track</button>
               </div>
             </div>
@@ -473,11 +511,11 @@
               <input type="range" id="audioSmoothing" min="0.5" max="0.99" step="0.01" value="0.85">
             </div>
           </div>
-        </details>
+        </div>
 
         <!-- Panel 2: Expanded Mathematical Formula Topology Core Engine -->
-        <details class="control-section">
-          <summary class="section-title">Mathematical Geometry Topology</summary>
+        <div class="control-section">
+          <div class="section-title">Mathematical Geometry Topology</div>
           <div class="section-content">
             <div class="control-group">
               <label class="control-label">Vector Formula Class</label>
@@ -530,11 +568,11 @@
               </label>
             </div>
           </div>
-        </details>
+        </div>
 
         <!-- Panel 3: Render Compositor Filters & Style Studio Matrix -->
-        <details class="control-section">
-          <summary class="section-title">Visual Filters & Style FX</summary>
+        <div class="control-section">
+          <div class="section-title">Visual Filters & Style FX</div>
           <div class="section-content">
             <div class="control-group">
               <label class="control-label">Color Space Chromancy Mode</label>
@@ -550,8 +588,14 @@
             <div class="control-group" id="solidColorGroup" style="display:none;">
               <label class="control-label">Color Swatch Selection</label>
               <div class="color-pickers">
-                <div class="color-picker-wrapper"><input type="color" id="colorPrimary" value="#ff0055"><span class="color-picker-label">Prim</span></div>
-                <div class="color-picker-wrapper"><input type="color" id="colorSecondary" value="#0084ff"><span class="color-picker-label">Sec</span></div>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="colorPrimary" value="#ff0055">
+                  <span class="color-picker-label">Primary</span>
+                </div>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="colorSecondary" value="#0084ff">
+                  <span class="color-picker-label">Secondary</span>
+                </div>
               </div>
             </div>
 
@@ -590,11 +634,11 @@
               </label>
             </div>
           </div>
-        </details>
+        </div>
 
         <!-- Panel 4: Physics Sim Evolution, Friction & Noise Parameters -->
-        <details class="control-section">
-          <summary class="section-title">Generative Mutation & Physics</summary>
+        <div class="control-section">
+          <div class="section-title">Generative Mutation & Physics</div>
           <div class="section-content">
             <div class="toggle-group">
               <div>
@@ -627,20 +671,20 @@
               <input type="range" id="chaosJitter" min="0" max="5" step="0.1" value="0.0">
             </div>
           </div>
-        </details>
+        </div>
 
         <!-- Panel 5: Production Composition Multi-Layer Node Stack Manager -->
-        <details class="control-section">
-          <summary class="section-title">Multi-Layer Compositor <span id="layerCount" style="color:#ff0055; font-size:0.75rem; font-weight:700;">0 saved</span></summary>
+        <div class="control-section">
+          <div class="section-title">Multi-Layer Compositor <span id="layerCount" style="color:#ff0055; font-size:0.75rem; font-weight:700;">0 saved</span></div>
           <div class="section-content">
             <button class="btn btn-secondary" id="saveLayerBtn" style="width:100%; font-size:0.75rem; padding:8px;">Commit Array Frame to Sandbox Layer</button>
             <div class="layers-list" id="layersList"></div>
           </div>
-        </details>
+        </div>
 
         <!-- Panel 6: Mathematical Aesthetics Engine Profiles Selectors -->
-        <details class="control-section">
-          <summary class="section-title">Aesthetic System Profiles</summary>
+        <div class="control-section">
+          <div class="section-title">Aesthetic System Profiles</div>
           <div class="section-content">
             <div class="preset-chips" id="presetsContainer">
               <span class="chip" data-preset="nebula">Mystic Nebula</span>
@@ -650,11 +694,11 @@
               <span class="chip" data-preset="butterfly">Ascending Morph</span>
             </div>
           </div>
-        </details>
+        </div>
 
         <!-- Panel 7: Global Pipeline State Presets Serialization System (JSON Pipeline IO) -->
-        <details class="control-section">
-          <summary class="section-title">Pipeline Serialization Model</summary>
+        <div class="control-section">
+          <div class="section-title">Pipeline Serialization Model</div>
           <div class="section-content">
             <div class="control-group">
               <label class="control-label">Export / Import State Node Mapping</label>
@@ -662,11 +706,11 @@
             </div>
             <button class="btn btn-secondary" id="importConfigBtn" style="font-size:0.75rem; padding:6px;">Parse Imported Matrix Map String</button>
           </div>
-        </details>
+        </div>
 
         <!-- Panel 8: High Definition Export Scaler Settings Matrix -->
-        <details class="control-section">
-          <summary class="section-title">Studio Export Configurations</summary>
+        <div class="control-section">
+          <div class="section-title">Studio Export Configurations</div>
           <div class="section-content">
             <div class="control-group">
               <label class="control-label">Target Canvas Rasterization Scale multiplier</label>
@@ -684,7 +728,7 @@
               </label>
             </div>
           </div>
-        </details>
+        </div>
 
       </div>
 
@@ -1354,7 +1398,8 @@
 
     function updateSerialUIBox() {
       const stateObj = { R, r, d, m, type, colorMode, strokeWidth, useGlow, speed, autoEvolve, colorPrimary, colorSecondary };
-      document.getElementById('configIOBox').value = JSON.stringify(stateObj);
+      const configBox = document.getElementById('configIOBox');
+      if (configBox) configBox.value = JSON.stringify(stateObj);
     }
 
     function parseImportedConfigText() {
@@ -1460,13 +1505,14 @@
       document.getElementById('renderSpeed').addEventListener('input', (e) => { speed = parseInt(e.target.value); document.getElementById('speedVal').innerText = `${speed}x`; });
       document.getElementById('orbitalFriction').addEventListener('input', (e) => { currentOrbitalFriction = parseFloat(e.target.value); document.getElementById('frictionVal').innerText = currentOrbitalFriction.toFixed(4); });
       document.getElementById('chaosJitter').addEventListener('input', (e) => { currentChaosJitter = parseFloat(e.target.value); document.getElementById('jitterVal').innerText = currentChaosJitter.toFixed(1); });
+      document.getElementById('micSensitivity').addEventListener('input', (e) => { micSensitivity = parseFloat(e.target.value); document.getElementById('micSensVal').innerText = micSensitivity.toFixed(1); });
+      document.getElementById('audioSmoothing').addEventListener('input', (e) => { audioLowpassSmoothing = parseFloat(e.target.value); document.getElementById('audioSmoothVal').innerText = audioLowpassSmoothing.toFixed(2); });
 
       document.getElementById('spiroType').addEventListener('change', (e) => { type = e.target.value; resetSpirograph(); });
       document.getElementById('canvasBlendMode').addEventListener('change', (e) => { globalGCO = e.target.value; document.getElementById('hudGCO').innerText = globalGCO.toUpperCase(); });
       document.getElementById('colorMode').addEventListener('change', (e) => { colorMode = e.target.value; mainGradientCache = null; document.getElementById('solidColorGroup').style.display = colorMode === 'solid' ? 'block' : 'none'; });
       document.getElementById('audioFrequencyBand').addEventListener('change', (e) => { audioFrequencyBand = e.target.value; });
       document.getElementById('audioMappingTarget').addEventListener('change', (e) => { audioMappingTarget = e.target.value; });
-      document.getElementById('audioSmoothing').addEventListener('change', (e) => { audioLowpassSmoothing = parseFloat(e.target.value); document.getElementById('audioSmoothVal').innerText = audioLowpassSmoothing.toFixed(2); });
       
       document.getElementById('colorPrimary').addEventListener('input', (e) => { colorPrimary = e.target.value; mainGradientCache = null; });
       document.getElementById('colorSecondary').addEventListener('input', (e) => { colorSecondary = e.target.value; mainGradientCache = null; });
